@@ -156,6 +156,14 @@
       color: green;
       animation: fadeIn 0.5s ease-out;
     }
+
+    #bienvenida {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #006837;
+      font-weight: bold;
+      animation: fadeIn 0.5s ease-out;
+    }
   </style>
 </head>
 <body>
@@ -173,6 +181,7 @@
     <h2>Conoce nuestro cantón</h2>
     <img src="volcan.jpg" alt="Paisaje real de Rumiñahui" class="imagen">
     <p>Rumiñahui es un cantón ecuatoriano ubicado al sureste de la provincia de Pichincha...</p>
+    <div id="bienvenida"></div>
     <button class="boton" onclick="alert('¡Gracias por apoyar al GAD de Rumiñahui!')">¡Apóyanos!</button>
   </div>
 
@@ -215,17 +224,71 @@
   </footer>
 
   <script>
+    let usuarioActual = "";
+
     function inscribir(e) {
       e.preventDefault();
       const nombre = document.getElementById("nombreTaller").value;
       const email = document.getElementById("emailTaller").value;
       const curso = document.getElementById("cursoTaller").value;
-      document.getElementById("mensaje").innerHTML = `✅ Inscripción exitosa<br>Nombre: ${nombre}<br>Correo: ${email}<br>Curso: ${curso}`;
+
+      document.getElementById("mensaje").innerHTML = `
+        ✅ Inscripción exitosa<br>
+        <strong>Nombre:</strong> ${nombre}<br>
+        <strong>Correo:</strong> ${email}<br>
+        <strong>Curso:</strong> ${curso}
+      `;
     }
 
     function crearCuenta(e) {
       e.preventDefault();
       const usuario = document.getElementById("usuario").value;
+      usuarioActual = usuario;
+
+      document.getElementById("usuarioInfo").innerHTML = `
+        <span>👤 ${usuario}</span>
+                <button class="boton" onclick="mostrarConfiguracion()">Configuración</button>
+      `;
+      document.getElementById("bienvenida").innerHTML = `
+        👋 ¡Bienvenido, ${usuario}! Gracias por formar parte del GAD de Rumiñahui.
+      `;
+      document.getElementById("mensaje").innerHTML = `
+        ✅ Se ha creado la cuenta exitosamente<br>
+        <strong>Bienvenido:</strong> ${usuario}
+      `;
+    }
+
+    function iniciarSesion() {
+      const usuario = document.getElementById("usuario").value;
+      usuarioActual = usuario;
+
       document.getElementById("usuarioInfo").innerHTML = `
         <span>👤 ${usuario}</span>
         <button class="boton" onclick="mostrarConfiguracion()">Configuración</button>
+      `;
+      document.getElementById("bienvenida").innerHTML = `
+        👋 ¡Hola de nuevo, ${usuario}! Nos alegra verte por aquí.
+      `;
+      document.getElementById("mensaje").innerHTML = `
+        ✅ Inicio de sesión exitoso<br>
+        <strong>Bienvenido de nuevo:</strong> ${usuario}
+      `;
+    }
+
+    function mostrarConfiguracion() {
+      document.getElementById("configuracion").style.display = "block";
+    }
+
+    function cambiarClave() {
+      const nuevaClave = document.getElementById("nuevaClave").value;
+      if (nuevaClave.trim() === "") {
+        alert("Por favor ingresa una nueva contraseña.");
+      } else {
+        alert("✅ Contraseña actualizada correctamente.");
+        document.getElementById("nuevaClave").value = "";
+        document.getElementById("configuracion").style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
